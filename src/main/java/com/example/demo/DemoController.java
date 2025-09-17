@@ -21,5 +21,11 @@ public class DemoController {
         
         return "hello2";
     }
+
+    @GetMapping("/about_detailed")
+    public String about(){
+        return "about_detailed";
+    }
+    
     
 }
