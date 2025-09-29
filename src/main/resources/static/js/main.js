@@ -1,6 +1,17 @@
 (function ($) {
     "use strict";
 
+    function confrimClose(){
+        if (confirm("정말로 페이지를 나가시겠습니까?")) {
+            window.close(); 
+        }
+    };
+
+   const btnClose = document.getElementById("btn-close");
+    if (btnClose) {
+         btnClose.addEventListener("click", confrimClose);
+    }
+
     // Spinner
     var spinner = function () {
         setTimeout(function () {
