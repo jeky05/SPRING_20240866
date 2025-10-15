@@ -15,7 +15,9 @@
 -연습문제 : 사용자 추가 및 출력하기 (https://github.com/jeky05/SPRING_20240866/commit/8d04b36f4b46134d38ff2e9e490e3423bdb845cb)
 
 5주차 : 블로그 게시판 - 1
+-연습문제 : 페이지 리다이렉트 (https://github.com/jeky05/SPRING_20240866/commit/e689096d8d6793dc46a0026569c0344827fcc359)
 
 6주차 : 블로그 게시판 - 2
 변경사항 : https://github.com/jeky05/SPRING_20240866/commit/7efe12a3e3c6aabebe3b0f5e9db2363a92f3346f
+
 
