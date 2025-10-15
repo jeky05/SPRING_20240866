@@ -52,7 +52,14 @@ public class DemoController {
     @GetMapping("/testdb")
     public String getAllTestDBs(Model model) {
         TestDB test = testService.findByName("홍길동");
-        model.addAttribute("data4", test);
+        model.addAttribute("data1", test);
+
+        TestDB test2 = testService.findByName("아저씨");
+        model.addAttribute("data2", test2);
+
+        TestDB test3 = testService.findByName("꾸러기");
+        model.addAttribute("data3", test3);
+
         System.out.println("데이터 출력 디버그 : " + test);
         return "testdb";
 
