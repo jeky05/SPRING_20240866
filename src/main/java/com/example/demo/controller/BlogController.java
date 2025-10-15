@@ -14,13 +14,17 @@ import java.util.Optional;
 import com.example.demo.model.service.AddArticleRequest;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @Service
 @Repository
+
+@ControllerAdvice
 
 public class BlogController {
 
@@ -62,6 +66,11 @@ public class BlogController {
     public String addArticle(@ModelAttribute AddArticleRequest request) {
         blogService.save(request);
         return "redirect:/article_list";
+    }
+
+    @ExceptionHandler(NumberFormatException.class)
+    public String handleNumberFormatException() {
+        return "/error_page/article_idError";
     }
 
 }
