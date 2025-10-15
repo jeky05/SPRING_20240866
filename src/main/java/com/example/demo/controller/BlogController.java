@@ -15,6 +15,8 @@ import com.example.demo.model.service.AddArticleRequest;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @Service
@@ -53,6 +55,12 @@ public class BlogController {
     @DeleteMapping("/api/article_delete/{id}")
     public String deleteArticle(@PathVariable Long id) {
         blogService.delete(id);
+        return "redirect:/article_list";
+    }
+
+    @PostMapping("/api/articles")
+    public String addArticle(@ModelAttribute AddArticleRequest request) {
+        blogService.save(request);
         return "redirect:/article_list";
     }
 
