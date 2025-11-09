@@ -11,7 +11,7 @@ import com.example.demo.model.domain.Board;
 public class AddArticleRequest {
     private String title;
     private String content;
-    private String count;
+    private String vcount;
     private String user;
     private String likec;
     private String newdate;
@@ -20,7 +20,7 @@ public class AddArticleRequest {
         return Board.builder()
                 .title(title)
                 .content(content)
-                .count(count)
+                .vcount(vcount)
                 .user(user)
                 .likec(likec)
                 .newdate(newdate)
