@@ -45,8 +45,8 @@ public class BlogService {
     public void update(Long id, AddArticleRequest request) {
         Optional<Board> optionalBoard = blogRepository.findById(id);
         optionalBoard.ifPresent(board -> {
-            board.update(request.getTitle(), request.getContent(), request.getCount(), request.getUser(),
-                    request.getLikec(), request.getNewdate());
+            board.update(request.getTitle(), request.getContent(), board.getVcount(), board.getUser(),
+                    board.getLikec(), board.getNewdate());
             blogRepository.save(board);
         });
     }

@@ -3,9 +3,9 @@ package com.example.demo.model.domain;
 import lombok.*;
 import jakarta.persistence.*;
 
-@Getter
 @Entity
 @Table(name = "board")
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 
 public class Board {
@@ -20,8 +20,8 @@ public class Board {
     @Column(name = "content", nullable = false)
     private String content = "";
 
-    @Column(name = "count", nullable = false)
-    private String count = "";
+    @Column(name = "vcount", nullable = false)
+    private String vcount = "";
 
     @Column(name = "user", nullable = false)
     private String user = "";
@@ -33,19 +33,19 @@ public class Board {
     private String newdate = "";
 
     @Builder
-    public Board(String title, String content, String count, String user, String likec, String newdate) {
+    public Board(String title, String content, String vcount, String user, String likec, String newdate) {
         this.title = title;
         this.content = content;
-        this.count = count;
+        this.vcount = vcount;
         this.user = user;
         this.likec = likec;
         this.newdate = newdate;
     }
 
-    public void update(String title, String content, String count, String user, String likec, String newdate) {
+    public void update(String title, String content, String vcount, String user, String likec, String newdate) {
         this.title = title;
         this.content = content;
-        this.count = count;
+        this.vcount = vcount;
         this.user = user;
         this.likec = likec;
         this.newdate = newdate;
