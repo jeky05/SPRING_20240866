@@ -21,6 +21,12 @@
 [변경사항](https://github.com/jeky05/SPRING_20240866/commit/7efe12a3e3c6aabebe3b0f5e9db2363a92f3346f) / 
 [연습문제 : 예외처리](https://github.com/jeky05/SPRING_20240866/commit/5114b84386710e4df0682e80784db968df48e5f7)
 
+7주차 : 블로그 게시판 -3
+[수업직후상태](https://github.com/jeky05/SPRING_20240866/commit/92457a3efcad9e5181338b7a10b78a220e57b26a)
+[templteinputexception 에러 해결 : board_list.html ](https://github.com/jeky05/SPRING_20240866/commit/1d04423dc7dfa6fc029a42a84ae50423c22b8fa6#diff-b5224ea0495c6f63a00fa265bd13342ff4a6d885a1400a9a273529be86f818fa)
+[DataIntegrityViolationException (제목 데이터 안뜨고 null취급되는 오류) : 링크를 th:text로 바꾼게 원인](src/main/resources/templates/board_edit.html)
+[연습문제 : 글 수정 ](https://github.com/jeky05/SPRING_20240866/pull/1/commits/76fcce94947718d057f292b1bb59ac94e6a97fd4#diff-c6bbfba13350440f5863734e00b0259e365bf8fe0473e033b916693c18efb81a)
+
 
 
 
