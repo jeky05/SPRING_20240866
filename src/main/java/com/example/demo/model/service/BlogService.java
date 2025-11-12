@@ -7,6 +7,7 @@ import com.example.demo.model.domain.Board;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.demo.model.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,16 @@ public class BlogService {
 
     public Optional<Board> findById(Long id) {
         return blogRepository.findById(id);
+    }
+
+    public Page<Board> findAll(Pageable pageable) {
+        return blogRepository.findAll(pageable);
+    }
+
+    public Page<Board> searchByKeyword(String keyword, Pageable pageable) {
+        {
+            return blogRepository.findByTitleContainingIgnoreCase(keyword, pageable);
+        }
     }
 
     public Board save(AddArticleRequest request) {

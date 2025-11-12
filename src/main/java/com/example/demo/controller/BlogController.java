@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
@@ -13,11 +12,13 @@ import java.util.Optional;
 import com.example.demo.model.service.AddArticleRequest;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.model.domain.Board;
+import org.springframework.data.domain.*;
 
 @Controller
 @Service
@@ -31,10 +32,23 @@ public class BlogController {
     BlogService blogService;
 
     @GetMapping("/board_list") // 게시글 목록 페이지 이동
-    public String board_list(Model model) {
-        List<Board> list = blogService.findAll();
-        model.addAttribute("boards", list);
+    public String board_list(Model model, @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "") String keyword) {
+        PageRequest pageable = PageRequest.of(page, 3);
+        Page<Board> list;
+
+        if (keyword.isEmpty()) {
+            list = blogService.findAll(pageable); // 기본셋
+        } else {
+            list = blogService.searchByKeyword(keyword, pageable);
+        }
+        model.addAttribute("boards", list); // 기본셋
+        model.addAttribute("totalPages", list.getTotalPages());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("keyword", keyword);
+
         return "board_list";
+
     }
 
     @GetMapping("/board_view/{id}") // 게시글 상세보기 페이지 이동 (내용볼수있는곳)
