@@ -39,14 +39,14 @@ public class BlogController {
     // return "article_list";
     // }
 
-    @GetMapping("/board_list")
+    @GetMapping("/board_list") // 게시글 목록 페이지 이동
     public String board_list(Model model) {
         List<Board> list = blogService.findAll();
         model.addAttribute("boards", list);
         return "board_list";
     }
 
-    @GetMapping("/board_view/{id}")
+    @GetMapping("/board_view/{id}") // 게시글 상세보기 페이지 이동 (내용볼수있는곳)
     public String board_view(Model model, @PathVariable Long id) {
         Optional<Board> list = blogService.findById(id);
 
@@ -58,12 +58,12 @@ public class BlogController {
         return "board_view";
     }
 
-    @GetMapping("/board_write")
+    @GetMapping("/board_write") // 게시글 작성 페이지 이동
     public String board_write() {
         return "board_write";
     }
 
-    @GetMapping("/board_edit/{id}")
+    @GetMapping("/board_edit/{id}") // 게시글 수정 페이지 이동
     public String board_edit(Model model, @PathVariable Long id) {
         Optional<Board> list = blogService.findById(id);
 
@@ -87,19 +87,13 @@ public class BlogController {
     // return "article_edit";
     // }
 
-    @PutMapping("/api/board_view/{id}")
-    public String updateBoard(@PathVariable Long id, @ModelAttribute AddArticleRequest request) {
-        blogService.update(id, request);
-        return "redirect:/board_list";
-    }
-
-    @DeleteMapping("/api/board_delete/{id}")
+    @DeleteMapping("/api/board_delete/{id}") // 게시글 삭제 후 리다이렉트
     public String deleteBoard(@PathVariable Long id) {
         blogService.delete(id);
         return "redirect:/board_list";
     }
 
-    @PutMapping("/api/board_edit/{id}")
+    @PutMapping("/api/board_edit/{id}") // 게시글 수정 후 리다이렉트
     public String updateBoardEdit(@PathVariable Long id, @ModelAttribute AddArticleRequest request) {
         blogService.update(id, request);
         return "redirect:/board_list";
@@ -117,7 +111,7 @@ public class BlogController {
     // return "redirect:/article_list";
     // }
 
-    @PostMapping("/api/boards")
+    @PostMapping("/api/boards") // 게시글 추가 후 리다이렉트
     public String addBoard(@ModelAttribute AddArticleRequest request) {
         blogService.save(request);
         return "redirect:/board_list";
