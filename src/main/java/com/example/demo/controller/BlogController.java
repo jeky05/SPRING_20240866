@@ -58,6 +58,11 @@ public class BlogController {
         return "board_view";
     }
 
+    @GetMapping("/board_write")
+    public String board_write() {
+        return "board_write";
+    }
+
     @GetMapping("/board_edit/{id}")
     public String board_edit(Model model, @PathVariable Long id) {
         Optional<Board> list = blogService.findById(id);
