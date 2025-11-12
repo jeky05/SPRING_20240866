@@ -37,6 +37,9 @@ public class BlogController {
         PageRequest pageable = PageRequest.of(page, 3);
         Page<Board> list;
 
+        int startNum = (page * 3) + 1;
+        model.addAttribute("startNum", startNum);
+
         if (keyword.isEmpty()) {
             list = blogService.findAll(pageable); // 기본셋
         } else {
