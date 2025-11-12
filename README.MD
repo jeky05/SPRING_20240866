@@ -29,8 +29,9 @@
 
 
 9주차..? : 게시판 - 검색과 페이징
-[연습문제1 : 글 번호 ](https://github.com/jeky05/SPRING_20240866/commit/ac32b66cd88db3797911bd677aa8906a1d07733f)
+[연습문제1 : 글 번호 ](https://github.com/jeky05/SPRING_20240866/commit/ac32b66cd88db3797911bd677aa8906a1d07733f) / 
 [연습문제2 : 글 삭제(7주차에 수정 기능이랑 함께 완성함) ](src/main/java/com/example/demo/controller/BlogController.java)
+
 
 
 
