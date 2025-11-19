@@ -33,7 +33,9 @@
 [연습문제2 : 글 삭제(7주차에 수정 기능이랑 함께 완성함) ](src/main/java/com/example/demo/controller/BlogController.java)
 
 10주차: 로그인과 로그아웃 - 1 
-[수업후](commint/b8e8cccc474000de3b6c29aec47a45833183ba40)
+[수업후](https://github.com/jeky05/SPRING_20240866/commit/b8e8cccc474000de3b6c29aec47a45833183ba40) /
+
+
 
 
 
