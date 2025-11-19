@@ -1,6 +1,7 @@
 package com.example.demo.model.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import com.example.demo.model.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
+@Validated
 @RequiredArgsConstructor
 @Transactional
 public class Member_Service {

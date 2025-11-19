@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import com.example.demo.model.service.Member_Service;
+
+import jakarta.validation.Valid;
+
 import com.example.demo.model.service.AddMemberRequest;
 import com.example.demo.model.domain.Member;
 import org.springframework.stereotype.Service;
@@ -27,7 +30,7 @@ public class MemberController {
     }
 
     @PostMapping("/api/members") // 회원가입 처리
-    public String addmembers(@ModelAttribute AddMemberRequest request) {
+    public String addmembers(@Valid @ModelAttribute AddMemberRequest request) {
         memberService.saveMember(request);
         return "join_end";
     }
