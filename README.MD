@@ -28,10 +28,12 @@
 [연습문제 : 글 수정 ](https://github.com/jeky05/SPRING_20240866/pull/1/commits/76fcce94947718d057f292b1bb59ac94e6a97fd4#diff-c6bbfba13350440f5863734e00b0259e365bf8fe0473e033b916693c18efb81a)
 
 
-9주차..? : 게시판 - 검색과 페이징
+9주차 : 게시판 - 검색과 페이징
 [연습문제1 : 글 번호 ](https://github.com/jeky05/SPRING_20240866/commit/ac32b66cd88db3797911bd677aa8906a1d07733f) / 
 [연습문제2 : 글 삭제(7주차에 수정 기능이랑 함께 완성함) ](src/main/java/com/example/demo/controller/BlogController.java)
 
+10주차: 로그인과 로그아웃 - 1 
+[수업후](commint/b8e8cc)
 
 
 
