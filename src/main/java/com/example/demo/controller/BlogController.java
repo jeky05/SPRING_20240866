@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.model.domain.Board;
 import org.springframework.data.domain.*;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @Service
@@ -32,13 +33,23 @@ public class BlogController {
     BlogService blogService;
 
     @GetMapping("/board_list") // 게시글 목록 페이지 이동
-    public String board_list(Model model, @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "") String keyword) {
+    public String board_list(
+            Model model, @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "") String keyword, HttpSession session) {
         PageRequest pageable = PageRequest.of(page, 3);
         Page<Board> list;
 
+        String userId = (String) session.getAttribute("userId");
+        String email = (String) session.getAttribute("email");
+
+        if (userId == null) {
+            return "redirect:/member_login";
+        }
+        System.out.println("세션 userId: " + userId);
+
         int startNum = (page * 3) + 1;
         model.addAttribute("startNum", startNum);
+        model.addAttribute("email", email);
 
         if (keyword.isEmpty()) {
             list = blogService.findAll(pageable); // 기본셋

@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.*;
+import java.util.UUID;
+
 @Repository
 @Controller
 @Service
@@ -40,10 +43,44 @@ public class MemberController {
         return "login";
     }
 
-    @PostMapping("/api/login_check") // 로그인(아이디,패스워드) 체크
-    public String checkMembers(@ModelAttribute AddMemberRequest request, Model model) {
+    @GetMapping("/api/logout")
+    public String member_logout(Model model, HttpServletRequest request2, HttpServletResponse response) {
         try {
+            HttpSession session = request2.getSession(false);
+            session.invalidate();
+            Cookie cookie = new Cookie("JSESSIONID", null);
+            cookie.setPath("/");
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+            session = request2.getSession(true);
+            System.out.println("세션 userId: " + session.getAttribute("userId"));
+            return "login";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+            return "login";
+        }
+    }
+
+    @PostMapping("/api/login_check") // 로그인(아이디,패스워드) 체크
+    public String checkMembers(@ModelAttribute AddMemberRequest request, Model model, HttpServletRequest request2,
+            HttpServletResponse response) {
+        try {
+            HttpSession session = request2.getSession(false);
+            if (session != null) {
+                session.invalidate();
+                Cookie cookie = new Cookie("JSESSIONID", null);
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
+            session = request2.getSession(true);
+
             Member member = memberService.loginCheck(request.getEmail(), request.getPassword());
+            String sessionId = UUID.randomUUID().toString();
+            String email = request.getEmail();
+            session.setAttribute("userId", sessionId);
+            session.setAttribute("email", email);
+
             model.addAttribute("member", member);
             return "redirect:/board_list";
         } catch (IllegalArgumentException e) {
