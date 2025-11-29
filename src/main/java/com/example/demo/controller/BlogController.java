@@ -65,6 +65,11 @@ public class BlogController {
 
     }
 
+    @GetMapping("/session-expired")
+    public String session_expired() {
+        return "/error_page/session_expired";
+    }
+
     @GetMapping("/board_view/{id}") // 게시글 상세보기 페이지 이동 (내용볼수있는곳)
     public String board_view(Model model, @PathVariable Long id) {
         Optional<Board> list = blogService.findById(id);
