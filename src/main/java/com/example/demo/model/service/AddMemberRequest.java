@@ -16,7 +16,7 @@ import jakarta.validation.constraints.Pattern;
 
 public class AddMemberRequest {
     @NotBlank
-    @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]", message = "이름은 한글 또는 영문이어야 합니다.")
+    @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]+$", message = "이름은 한글 또는 영문이어야 합니다.") // +$ 추가 : 첫문자가 아닌 문자열 검사
     private String name;
 
     @NotBlank
@@ -28,9 +28,8 @@ public class AddMemberRequest {
     private String password;
 
     @Min(value = 19, message = "나이는 19세 이상이어야 합니다.")
-    @Max(value = 90, message = "나이는 90세 이하이어야 합니다.")
-    @Pattern(regexp = "^[0-9]+$", message = "나이는 숫자만 입력해야 합니다.")
-    private String age;
+    @Max(value = 90, message = "나이는 90세 이하이어야 합니다.") // pattern는 string전용
+    private int age;
 
     @NotNull
     private String mobile;

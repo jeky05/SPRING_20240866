@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.example.demo.model.domain.Board;
+import com.example.demo.model.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.demo.model.repository.BoardRepository;
+import com.example.demo.model.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 
@@ -16,6 +18,7 @@ public class BlogService {
     @Autowired
 
     private final BoardRepository blogRepository;
+    private final MemberRepository memberRepository;
 
     public List<Board> findAll() {
         return blogRepository.findAll();
@@ -36,7 +39,11 @@ public class BlogService {
     }
 
     public Board save(AddArticleRequest request) {
-        return blogRepository.save(request.toEntity());
+        Member member = memberRepository.findByEmail(request.getUserEmail());
+        if (member == null) {
+            throw new RuntimeException("회원 없음");
+        }
+        return blogRepository.save(request.toEntity(member));
     }
 
     public void update(Long id, AddArticleRequest request) {

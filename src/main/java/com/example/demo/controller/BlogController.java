@@ -78,7 +78,9 @@ public class BlogController {
     }
 
     @GetMapping("/board_write") // 게시글 작성 페이지 이동
-    public String board_write() {
+    public String board_write(HttpSession session, Model model) {
+        String email = (String) session.getAttribute("email");
+        model.addAttribute("email", email); // 모델에 email 추가
         return "board_write";
     }
 
@@ -107,7 +109,14 @@ public class BlogController {
     }
 
     @PostMapping("/api/boards") // 게시글 추가 후 리다이렉트
-    public String addBoard(@ModelAttribute AddArticleRequest request) {
+    public String addBoard(@ModelAttribute AddArticleRequest request, HttpSession session) {
+        String email = (String) session.getAttribute("email");
+        if (email == null) {
+            return "redirect:/member_login"; // 로그인 안 되어 있으면 로그인 페이지로
+        }
+        // DTO에 세션 email을 주입
+        request.setUserEmail(email);
+
         blogService.save(request);
         return "redirect:/board_list";
     }

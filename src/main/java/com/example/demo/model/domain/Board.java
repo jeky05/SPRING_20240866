@@ -23,8 +23,9 @@ public class Board {
     @Column(name = "vcount", nullable = false)
     private String vcount = "";
 
-    @Column(name = "user", nullable = false)
-    private String user = "";
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user", referencedColumnName = "email", nullable = false)
+    private Member user;
 
     @Column(name = "likec", nullable = false)
     private String likec = "";
@@ -33,7 +34,7 @@ public class Board {
     private String newdate = "";
 
     @Builder
-    public Board(String title, String content, String vcount, String user, String likec, String newdate) {
+    public Board(String title, String content, String vcount, Member user, String likec, String newdate) {
         this.title = title;
         this.content = content;
         this.vcount = vcount;
@@ -42,7 +43,7 @@ public class Board {
         this.newdate = newdate;
     }
 
-    public void update(String title, String content, String vcount, String user, String likec, String newdate) {
+    public void update(String title, String content, String vcount, Member user, String likec, String newdate) {
         this.title = title;
         this.content = content;
         this.vcount = vcount;

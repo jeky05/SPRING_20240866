@@ -2,6 +2,7 @@ package com.example.demo.model.service;
 
 import lombok.*;
 import com.example.demo.model.domain.Board;
+import com.example.demo.model.domain.Member;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,16 +12,16 @@ public class AddArticleRequest {
     private String title;
     private String content;
     private String vcount;
-    private String user;
+    private String userEmail;
     private String likec;
     private String newdate;
 
-    public Board toEntity() {
+    public Board toEntity(Member member) {
         return Board.builder()
                 .title(title)
                 .content(content)
                 .vcount(vcount)
-                .user(user)
+                .user(member)
                 .likec(likec)
                 .newdate(newdate)
                 .build();
