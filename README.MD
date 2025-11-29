@@ -38,7 +38,9 @@
 
 11주차: 로그인과 로그아웃 - 2
 [수업후](https://github.com/jeky05/SPRING_20240866/commit/d53493779139fb1f6750c87c026541008739695e) / 
-[연습문제 : 게시판 수정하기](https://github.com/jeky05/SPRING_20240866/commit/782d6b7af6ca6922b5f0bb8effa28d24fa853f4c)
+[연습문제 : 게시판 수정하기](https://github.com/jeky05/SPRING_20240866/commit/782d6b7af6ca6922b5f0bb8effa28d24fa853f4c) / 
+[발전 : 세션만료시 로그인 페이지로 이동](https://github.com/jeky05/SPRING_20240866/commit/ab6df238c00f60955d756aa2880557b2e702875d)
+
 
 
 
