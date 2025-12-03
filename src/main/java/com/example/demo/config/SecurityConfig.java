@@ -19,7 +19,8 @@ public class SecurityConfig {
                         .addHeaderWriter((request, response) -> {
                             response.setHeader("X-XSS-Protection", "1; mode = block");
                         }))
-                .csrf(withDefaults())
+                // .csrf(withDefaults())
+                .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session
                         .invalidSessionUrl("/session-expired")
                         .maximumSessions(1)
