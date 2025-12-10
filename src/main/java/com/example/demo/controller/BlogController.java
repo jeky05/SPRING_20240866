@@ -71,11 +71,12 @@ public class BlogController {
     }
 
     @GetMapping("/board_view/{id}") // 게시글 상세보기 페이지 이동 (내용볼수있는곳)
-    public String board_view(Model model, @PathVariable Long id) {
+    public String board_view(Model model, @PathVariable Long id, HttpSession session) {
         Optional<Board> list = blogService.findById(id);
-
+        String email = (String) session.getAttribute("email");
         if (list.isPresent()) {
             model.addAttribute("board", list.get());
+            model.addAttribute("email", email);
         } else {
             return "/error_page/article_error";
         }

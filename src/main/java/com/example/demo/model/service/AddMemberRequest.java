@@ -32,10 +32,10 @@ public class AddMemberRequest {
     private int age;
 
     @NotNull
-    private String mobile;
+    private String mobile = "";
 
     @NotNull
-    private String address;
+    private String address = "";
 
     public Member toEntity() {
         return Member.builder()
