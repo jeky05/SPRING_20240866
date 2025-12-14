@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
@@ -46,7 +47,10 @@ public class FileController {
                     + message;
 
             if (Files.exists(filePath)) { // 파일이 이미 존재하는 경우
-                String existingContent = Files.readString(filePath); // 기존 파일 내용 읽기
+                try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
+                    writer.write(content);
+                }
+                String existingContent = Files.readString(filePath, StandardCharsets.UTF_8);
 
                 if (!existingContent.equals(content)) { // 내용이 다르면 새 파일 생성
                     int counter = 1;
