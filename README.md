@@ -108,19 +108,257 @@
       ```
 
 ## 6주차 : 블로그 게시판 - 2 
-[변경사항](https://github.com/jeky05/SPRING_20240866/commit/7efe12a3e3c6aabebe3b0f5e9db2363a92f3346f) 
+> 5주차 커밋과 동일한 커밋을 공유하고 있음 : [5주차+6주차 커밋](https://github.com/jeky05/SPRING_20240866/commit/7efe12a3e3c6aabebe3b0f5e9db2363a92f3346f)
+- 게시글 수정/삭제 버튼 추가 (중첩 조합 - 동적 링크) : [article_edit.html](https://github.com/jeky05/SPRING_20240866/blob/7efe12a3e3c6aabebe3b0f5e9db2363a92f3346f/src/main/resources/templates/article_edit.html)
+  ```
+  <a class="btn btn-warning" th:href="@{/articles_edit/{id}(id=${article.id}}">수정</a>
+  <a class="btn btn-warning" th:href="@{/articles_edit/{id}(id=${article.id}}">삭제</a>
+  ```
+- 블로그 게시판(수정)
+  - 해당 파일 :
+    - 컨트롤러 클래스 추가 : [BlogController.java](https://github.com/jeky05/SPRING_20240866/blob/7efe12a3e3c6aabebe3b0f5e9db2363a92f3346f/src/main/java/com/example/demo/controller/BlogController.java)
+      - 게시글 수정 페이지로 이동
+      ```
+      @GetMapping("/article_edit/{id}") //게시판 링크 지정
+      public String article_edit(Model model, @PathVariable Long id) {
+          Optional<Article> list = blogService.findById(id); //선택한 게시글
+  
+          if (list.isPresent()) { //존재하면
+              model.addAttribute("article", list.get()); //객체를 모델에 추가
+          } else {
+              return "/error_page/article_error"; //오류 페이지로 이동
+          }
+          return "article_edit"; //.html 연결
+      }
+      ```
+      - 게시글 수정 기능
+      ```
+      @PutMapping("/api/article_edit/{id}") //PUT은 다수 요청에 대해 동일한 결과, 동일 데이터 수정
+      public String updateArticle(@PathVariable Long id, @ModelAttribute AddArticleRequest request) {
+          blogService.update(id, request);
+          return "redirect:/article_list"; //글 수정 이후 .html 연결
+      }
+      ```
+      
+    - 게시글 수정 페이지 : [article_edit.html](https://github.com/jeky05/SPRING_20240866/blob/7efe12a3e3c6aabebe3b0f5e9db2363a92f3346f/src/main/resources/templates/article_edit.html)
+    - 서비스 클래스 추가 : [BlogService.java](https://github.com/jeky05/SPRING_20240866/blob/7efe12a3e3c6aabebe3b0f5e9db2363a92f3346f/src/main/java/com/example/demo/model/service/BlogService.java)
+      ```
+      public Optional<Article> findById(Long id) { //특정 게시글 조회
+        return blogRepository.findById(id);
+      }
+  
+      public void update(Long id, AddArticleRequest request) {
+          Optional<Article> optionalArticle = blogRepository.findById(id); //단일 글 조회
+          optionalArticle.ifPresent(article -> { //값이 있으면
+              article.update(request.getTitle(), request.getContent()); //값을 수정
+              blogRepository.save(article); //객체에 저장
+          });
+      }
+      ```
+    - 엔티티 클래스 수정 : [Article.java](https://github.com/jeky05/SPRING_20240866/blob/7efe12a3e3c6aabebe3b0f5e9db2363a92f3346f/src/main/java/com/example/demo/model/domain/Article.java)
+      ```
+      public void update(String title, String content) { //현재 객체 업데이트
+        this.title = title;
+        this.content = content;
+      }
+      ```
+    - 애플리케이션 설정 추가 : [application.properteis](https://github.com/jeky05/SPRING_20240866/blob/7efe12a3e3c6aabebe3b0f5e9db2363a92f3346f/src/main/resources/application.properties)
+      ```
+      // html 기본 폼 전송은 get/post 두가지만 지원, but 게시글 글 수정 요청은 put 메소드기 때문에 설정 필요
+      spring.mvc.hiddenmethod.filter.enabled=true
+      ```
+- 블로그 게시판(삭제)
+  - 해당 파일 :
+    - 컨트롤러 클래스 수정 : [BlogController.java](https://github.com/jeky05/SPRING_20240866/blob/7efe12a3e3c6aabebe3b0f5e9db2363a92f3346f/src/main/java/com/example/demo/controller/BlogController.java)
+      ```
+      @DeleteMapping("/api/article_delete/{id}")
+      public String deleteArticle(@PathVariable Long id) {
+          blogService.delete(id);
+          return "redirect:/article_list";
+      }
+      ```
+    - 서비스 클래스 추가 : [BlogService.java](https://github.com/jeky05/SPRING_20240866/blob/7efe12a3e3c6aabebe3b0f5e9db2363a92f3346f/src/main/java/com/example/demo/model/service/BlogService.java)
+      ```
+      public void delete(Long id) {
+        blogRepository.deleteById(id);
+      }
+      ```
+    - 게시글 삭제 버튼 : [article_list.html](https://github.com/jeky05/SPRING_20240866/blob/7efe12a3e3c6aabebe3b0f5e9db2363a92f3346f/src/main/resources/templates/article_list.html)
+      ```
+      <form th:action="@{/api/article_delete/{id}(id=${article.id})}" method="post" style="display:inline;">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit" class="btn btn-danger">삭제</button>
+      </form>
 
-연습문제 : [예외처리](https://github.com/jeky05/SPRING_20240866/commit/5114b84386710e4df0682e80784db968df48e5f7)
+- 에러 페이지 : [article_error.html](https://github.com/jeky05/SPRING_20240866/blob/7efe12a3e3c6aabebe3b0f5e9db2363a92f3346f/src/main/resources/templates/error_page/article_error.html)
+
+- 연습문제 : [예외처리](https://github.com/jeky05/SPRING_20240866/commit/5114b84386710e4df0682e80784db968df48e5f7)
+  - 컨트롤러 : [BlogController.java](https://github.com/jeky05/SPRING_20240866/blob/5114b84386710e4df0682e80784db968df48e5f7/src/main/java/com/example/demo/controller/BlogController.java)
+    ```
+    import org.springframework.web.bind.annotation.ControllerAdvice;
+    @ControllerAdvice
+    ...
+    @ExceptionHandler(NumberFormatException.class) // 링크의 매개변수가 정수가 아닌 문자열일 때의 오류
+    public String handleNumberFormatException() {
+        return "/error_page/article_idError";
+    }
+    ```
+---
 
 ## 7주차 : 블로그 게시판 - 3
-[수업직후상태](https://github.com/jeky05/SPRING_20240866/commit/92457a3efcad9e5181338b7a10b78a220e57b26a) 
+>[수업 후 커밋](https://github.com/jeky05/SPRING_20240866/commit/92457a3efcad9e5181338b7a10b78a220e57b26a)
 
-[templteinputexception 에러 해결 : board_list.html ](https://github.com/jeky05/SPRING_20240866/commit/1d04423dc7dfa6fc029a42a84ae50423c22b8fa6#diff-b5224ea0495c6f63a00fa265bd13342ff4a6d885a1400a9a273529be86f818fa) 
+- 새 게시판 : [board_list.html](https://github.com/jeky05/SPRING_20240866/blob/92457a3efcad9e5181338b7a10b78a220e57b26a/src/main/resources/templates/board_list.html)
+  ```
+  <tr th:each="board : ${boards}">
+      <td th:text="${board.id}"></td>
+      <td>
+          <a th:href="@{/board_view/{id}(id=${board.id})}">
+              <span th: th:text="${board.title}"></span> // 이거 때문에 오류남. 해결 과정은 뒤에 써놓음
+          </a>
+      </td>
+      <td th:text="${board.user}"></td>
+      <td th:text="${board.newdate}"></td>
+      <td th:text="${board.count}"></td>
+      <td th:text="${board.likec}"></td>
+  </tr>
+  ```
+- 게시판 조회 :
+  - 해당 파일 :
+    - 컨트롤러 등록 : [BlogController.java](https://github.com/jeky05/SPRING_20240866/blob/92457a3efcad9e5181338b7a10b78a220e57b26a/src/main/java/com/example/demo/controller/BlogController.java)
+      ```
+      @GetMapping("/board_list") //게시판 링크 지정
+      public String board_list(Model model) {
+          List<Board> list = blogService.findAll(); //전체 게시글 
+          model.addAttribute("boards", list); //모델에 추가
+          return "board_list"; //.HTML 연결
+      }
+      
+      @GetMapping("/board_view/{id}") //게시글 링크 지정
+      public String board_view(Model model, @PathVariable Long id) {
+          Optional<Board> list = blogService.findById(id); //선택한 게시글
+  
+          if (list.isPresent()) {
+              model.addAttribute("board", list.get()); //존재하면 모델에 추가
+          } else {
+              return "/error_page/article_error";
+          }
+          return "board_view"; //.HTML 연결
+      }
+      ```
+      
+    - DB 추가 : [Board.java](https://github.com/jeky05/SPRING_20240866/blob/92457a3efcad9e5181338b7a10b78a220e57b26a/src/main/java/com/example/demo/model/domain/Board.java)
 
-[DataIntegrityViolationException (제목 데이터 안뜨고 null 취급되는 오류) : 링크를 th:text로 바꾼게 원인](src/main/resources/templates/board_edit.html) 
+      ```
+      @Builder //새로운 필드 : 작성자, 작성일, 조회수, 좋아요
+      public Board(String title, String content, String count, String user, String likec, String newdate) {
+          this.title = title;
+          this.content = content;
+          this.count = count;
+          this.user = user;
+          this.likec = likec;
+          this.newdate = newdate;
+      }
+      
+      public void update(String title, String content, String count, String user, String likec, String newdate) {
+        this.title = title;
+        this.content = content;
+        this.count = count;
+        this.user = user;
+        this.likec = likec;
+        this.newdate = newdate;
+      }
+      ```
+      
+    - 리포지토리 연동 : [BoardRepository.java](https://github.com/jeky05/SPRING_20240866/blob/92457a3efcad9e5181338b7a10b78a220e57b26a/src/main/java/com/example/demo/model/repository/BoardRepository.java)
 
-연습문제 : [글 수정 ](https://github.com/jeky05/SPRING_20240866/pull/1/commits/76fcce94947718d057f292b1bb59ac94e6a97fd4#diff-c6bbfba13350440f5863734e00b0259e365bf8fe0473e033b916693c18efb81a)
+      ```
+      public interface BoardRepository extends JpaRepository<Board, Long> {
+          List<Board> findAll();
+      }
+      ```
+      
+    - 서비스 수정 : [BlogService.java](https://github.com/jeky05/SPRING_20240866/blob/92457a3efcad9e5181338b7a10b78a220e57b26a/src/main/java/com/example/demo/model/service/BlogService.java)
+      ```
+      private final BoardRepository blogRepository; //리포지토리 선언
+      
+      public List<Board> findAll() { //전체 게시글 조회
+        return blogRepository.findAll();
+      }
+  
+      public Optional<Board> findById(Long id) { //특정 게시글 조회
+          return blogRepository.findById(id);
+      }
+      ```
+    - 글 내용 보기 페이지 : [board_view.html](https://github.com/jeky05/SPRING_20240866/blob/92457a3efcad9e5181338b7a10b78a220e57b26a/src/main/resources/templates/board_view.html)
+      ```
+      <table class ="table table-bordered">
+                <thread>
+                    <tr>
+                        <th>글내용</th>
+                    </tr>
+                </thread>
+                <tbody>
+                    <tr th:each="board : ${boards}">
+                        <td th:text="${board.content}"></td>
+                    </tr>
+                    <tr th:each="board : ${boards}">
+        ```
+- 에러 해결 :
+  - [templteinputexception 에러: board_list.html ](https://github.com/jeky05/SPRING_20240866/commit/1d04423dc7dfa6fc029a42a84ae50423c22b8fa6#diff-b5224ea0495c6f63a00fa265bd13342ff4a6d885a1400a9a273529be86f818fa) 
 
+  - [DataIntegrityViolationException (제목 데이터 안뜨고 null 취급되는 오류) : 링크를 th:text로 바꾼게 원인](src/main/resources/templates/board_edit.html) 
+
+- 연습문제 : [글 수정](https://github.com/jeky05/SPRING_20240866/pull/1/commits/76fcce94947718d057f292b1bb59ac94e6a97fd4#diff-c6bbfba13350440f5863734e00b0259e365bf8fe0473e033b916693c18efb81a)
+  - 글 수정 화면 구성 : [board_edit.html](https://github.com/jeky05/SPRING_20240866/blob/76fcce94947718d057f292b1bb59ac94e6a97fd4/src/main/resources/templates/board_edit.html)
+  - 서비스 로직 수정 : [AddArticleRequest.java](https://github.com/jeky05/SPRING_20240866/blob/76fcce94947718d057f292b1bb59ac94e6a97fd4/src/main/java/com/example/demo/model/service/AddArticleRequest.java)
+    
+    ```
+    public Board toEntity() {
+        return Board.builder()
+                .title(title)
+                .content(content)
+                .vcount(vcount)
+                .user(user)
+                .likec(likec)
+                .newdate(newdate)
+                .build();
+    }
+    ```
+
+  - 서비스 로직 수정(2) : [BlogService.java](https://github.com/jeky05/SPRING_20240866/blob/76fcce94947718d057f292b1bb59ac94e6a97fd4/src/main/java/com/example/demo/model/service/BlogService.java)
+    
+    ```
+    public void update(Long id, AddArticleRequest request) {
+        Optional<Board> optionalBoard = blogRepository.findById(id);
+        optionalBoard.ifPresent(board -> {
+            board.update(request.getTitle(), request.getContent(), board.getVcount(), board.getUser(),
+                    board.getLikec(), board.getNewdate());
+            blogRepository.save(board);
+        });
+    }
+    ```
+
+  - 컨트롤러 수정 : [BlogController.java](https://github.com/jeky05/SPRING_20240866/blob/76fcce94947718d057f292b1bb59ac94e6a97fd4/src/main/java/com/example/demo/controller/BlogController.java)
+    ```
+    @GetMapping("/board_edit/{id}") // 수정페이지로 이동
+    public String board_edit(Model model, @PathVariable Long id) {
+        Optional<Board> list = blogService.findById(id);
+
+        if (list.isPresent()) {
+            model.addAttribute("board", list.get());
+        } else {
+            return "/error_page/article_error";
+        }
+        return "board_edit";
+    }
+    
+    @PutMapping("/api/board_edit/{id}") // 수정 적용 
+    public String updateBoardEdit(@PathVariable Long id, @ModelAttribute AddArticleRequest request) {
+        blogService.update(id, request);
+        return "redirect:/board_list";
+    }
+    ```
 
 ## 9주차 : 게시판 - 검색과 페이징
 연습문제
@@ -142,6 +380,7 @@
 
 ## 12주차: 포트폴리오 완성
 [수업후](https://github.com/jeky05/SPRING_20240866/commit/ca12495c36c83151179927b76baec0fed510cde9)
+
 
 
 
