@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration // 설정 클래스 지정
 @EnableWebSecurity // 보안 활성화
@@ -19,7 +18,6 @@ public class SecurityConfig {
                         .addHeaderWriter((request, response) -> {
                             response.setHeader("X-XSS-Protection", "1; mode = block");
                         }))
-                // .csrf(withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session
                         .invalidSessionUrl("/session-expired")

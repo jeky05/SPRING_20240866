@@ -14,7 +14,6 @@ import com.example.demo.model.service.AddMemberRequest;
 import com.example.demo.model.domain.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.*;
 import java.util.UUID;
