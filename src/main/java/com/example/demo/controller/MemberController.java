@@ -44,16 +44,19 @@ public class MemberController {
     }
 
     @GetMapping("/api/logout")
-    public String member_logout(Model model, HttpServletRequest request2, HttpServletResponse response) {
+    public String member_logout(Model model, HttpServletRequest request, HttpServletResponse response) {
         try {
-            HttpSession session = request2.getSession(false);
-            session.invalidate();
-            Cookie cookie = new Cookie("JSESSIONID", null);
-            cookie.setPath("/");
-            cookie.setMaxAge(0);
-            response.addCookie(cookie);
-            session = request2.getSession(true);
-            System.out.println("세션 userId: " + session.getAttribute("userId"));
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                // 현재 사용자 세션만 종료
+                session.invalidate();
+
+                // 현재 세션 쿠키만 삭제
+                Cookie cookie = new Cookie("JSESSIONID", null);
+                cookie.setPath(request.getContextPath().isEmpty() ? "/" : request.getContextPath());
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
             return "login";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
@@ -61,25 +64,21 @@ public class MemberController {
         }
     }
 
-    @PostMapping("/api/login_check") // 로그인(아이디,패스워드) 체크
-    public String checkMembers(@ModelAttribute AddMemberRequest request, Model model, HttpServletRequest request2,
-            HttpServletResponse response) {
+    @PostMapping("/api/login_check") // 로그인 처리
+    public String checkMembers(@ModelAttribute AddMemberRequest request, Model model,
+            HttpServletRequest httpRequest, HttpServletResponse response) {
         try {
-            HttpSession session = request2.getSession(false);
-            if (session != null) {
-                session.invalidate();
-                Cookie cookie = new Cookie("JSESSIONID", null);
-                cookie.setPath("/");
-                cookie.setMaxAge(0);
-                response.addCookie(cookie);
-            }
-            session = request2.getSession(true);
-
+            // 새로운 세션 생성
+            HttpSession session = httpRequest.getSession(true);
             Member member = memberService.loginCheck(request.getEmail(), request.getPassword());
+
+            // 사용자별 고유 세션 ID 생성
             String sessionId = UUID.randomUUID().toString();
             String email = request.getEmail();
+
             session.setAttribute("userId", sessionId);
             session.setAttribute("email", email);
+            session.setAttribute("member", member);
 
             model.addAttribute("member", member);
             return "redirect:/board_list";
