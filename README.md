@@ -29,16 +29,26 @@
 ---
 
 ## 3주차 : 포트폴리오 작성하기 완료 
+- 포트폴리오 페이지
+  <img width="2879" height="1418" alt="image" src="https://github.com/user-attachments/assets/e3e59fc1-276d-4eb5-a09a-1bbd607167fe" />
+- 소개 내용
+  <img width="2865" height="1441" alt="image" src="https://github.com/user-attachments/assets/cea4f124-6ca4-443d-a3b4-ab4e7001f828" />
 
 - 상세 페이지 생성
   - 해당 파일 :
     - [DemoController.java](https://github.com/jeky05/SPRING_20240866/blob/bb5afc7874534016f2b73204ee25dcae8eb1646e/src/main/java/com/example/demo/DemoController.java)
     - [about_detailed.html](https://github.com/jeky05/SPRING_20240866/blob/c7166727c98063691c3a286296288a219b772d30/src/main/resources/templates/about_detailed.html) 
+    - 화면 :
+      <img width="2797" height="1379" alt="image" src="https://github.com/user-attachments/assets/d3b7686a-84af-4e93-8834-0de2079d4d55" />
+
 
 - 연습 문제 : [상세 페이지 수정하기](https://github.com/jeky05/SPRING_20240866/commit/fb3f1c3c50e62395c11051d11de4b4594faeeee6)
   - 해당 파일 :
     - [static/main.js](https://github.com/jeky05/SPRING_20240866/blob/fb3f1c3c50e62395c11051d11de4b4594faeeee6/src/main/resources/static/js/main.js)
     - [about_detailed.html](https://github.com/jeky05/SPRING_20240866/blob/fb3f1c3c50e62395c11051d11de4b4594faeeee6/src/main/resources/templates/about_detailed.html)
+
+  - 화면 :
+    <img width="2875" height="1294" alt="image" src="https://github.com/user-attachments/assets/a4510de2-9f69-4825-b20c-f852ff308594" />
 
 ---
 
@@ -46,6 +56,11 @@
 > 5주차 내용과 동일한 커밋을 공유하고 있음 - [4주차+5주차 커밋](https://github.com/jeky05/SPRING_20240866/commit/d341ecc99ad24c4697806a7d804352292cbdd672#diff-457e64d5ec6a16a54e16a31bd3ca300ad324186761f4b82e67895e7a0ff96b8b)
 
 - 프로필 수정 : [index.html](https://github.com/jeky05/SPRING_20240866/blob/d341ecc99ad24c4697806a7d804352292cbdd672/src/main/resources/templates/index.html)
+  기술 경험 내용 페이지 화면
+  <img width="2727" height="1063" alt="image" src="https://github.com/user-attachments/assets/1c21649a-10bd-4a2f-b2bc-1eced02afba8" />
+  <img width="2620" height="994" alt="image" src="https://github.com/user-attachments/assets/e5ce34df-6d0d-43e1-8bb5-7ace814bba41" />
+
+
 - 데이터베이스 연동 :
   - 해당 파일 :
     - [pom.xml(Spring Data JPA, database, SQL 모듈 주석처리 해제)](https://github.com/jeky05/SPRING_20240866/blob/d341ecc99ad24c4697806a7d804352292cbdd672/pom.xml)
@@ -207,6 +222,10 @@
 
 ## 7주차 : 블로그 게시판 - 3
 >[수업 후 커밋](https://github.com/jeky05/SPRING_20240866/commit/92457a3efcad9e5181338b7a10b78a220e57b26a)
+- 포트폴리오 내용 - 프로젝트
+  <img width="2191" height="1268" alt="image" src="https://github.com/user-attachments/assets/df4ae182-5561-4cc5-a51a-de69cb21d2af" />
+  <img width="2196" height="926" alt="image" src="https://github.com/user-attachments/assets/9184f4fc-04a5-4faf-9ca6-319b115a36f9" />
+
 
 - 새 게시판 : [board_list.html](https://github.com/jeky05/SPRING_20240866/blob/92457a3efcad9e5181338b7a10b78a220e57b26a/src/main/resources/templates/board_list.html)
   ```
@@ -304,6 +323,9 @@
                     </tr>
                     <tr th:each="board : ${boards}">
         ```
+      - 글 내용 보기 페이지 화면(포트폴리오 페이지 완성 후 캡쳐한 화면) :
+        <img width="2879" height="1263" alt="image" src="https://github.com/user-attachments/assets/f41d60f0-0171-4249-981c-10fc374e8d33" />
+
 - 에러 해결 :
   - [templteinputexception 에러: board_list.html ](https://github.com/jeky05/SPRING_20240866/commit/1d04423dc7dfa6fc029a42a84ae50423c22b8fa6#diff-b5224ea0495c6f63a00fa265bd13342ff4a6d885a1400a9a273529be86f818fa) 
 
@@ -359,6 +381,10 @@
         return "redirect:/board_list";
     }
     ```
+  - 글 수정 페이지 화면 :
+    <img width="2876" height="1427" alt="image" src="https://github.com/user-attachments/assets/75c68cda-ceea-4a81-a936-a4e8d339f9c3" />
+
+
 ---
 
 ## 9주차 : 게시판 - 검색과 페이징
@@ -400,6 +426,8 @@
         return blogRepository.save(request.toEntity());
     }
   ```  
+  - 글쓰기 페이지 화면(포트폴리오 완성 후 캡쳐) :
+    <img width="2879" height="1115" alt="image" src="https://github.com/user-attachments/assets/4bf05a3f-621e-4d73-a25c-620d482847be" />
 
 - 검색창 페이징 : [커밋](https://github.com/jeky05/SPRING_20240866/commit/7a98ff4c327070d703b7c783a330999aa9ae2cf0)
   - 검색창 화면 : [board_list.html](https://github.com/jeky05/SPRING_20240866/blob/08bb85f24b9d6952dc86c2f11cbc052674f214e9/src/main/resources/templates/board_list.html)
@@ -509,11 +537,18 @@
           blogRepository.deleteById(id);
       }
       ```
-  
+    - 화면(포트폴리오 완성 후 캡쳐) :
+      <img width="2879" height="1167" alt="image" src="https://github.com/user-attachments/assets/fbd16d70-18b8-46da-bdb4-b8f23d2e9eab" />
+
 ---
 
 ## 10주차: 로그인과 로그아웃 - 1 
 > [수업후](https://github.com/jeky05/SPRING_20240866/commit/b8e8cccc474000de3b6c29aec47a45833183ba40) 
+- 로그인 화면 :
+  <img width="2833" height="1131" alt="image" src="https://github.com/user-attachments/assets/ac0fb06b-85a3-4f7d-8d7b-0211256571ee" />
+- 회원가입 화면 :
+  <img width="2761" height="1405" alt="image" src="https://github.com/user-attachments/assets/bda18951-f1af-45a9-886d-384e49b1f6f3" />
+
 
 - 연습문제 : [입력값 필터링](https://github.com/jeky05/SPRING_20240866/commit/d86e55fd0d31198c68398e4b529c260732bf1c31)
 - 필터링 오류 수정 : 주소 등의 빈칸 허용 필드가 빈칸을 허용하지 않음
@@ -524,6 +559,10 @@
 
 ## 11주차: 로그인과 로그아웃 - 2
 > [수업후](https://github.com/jeky05/SPRING_20240866/commit/d53493779139fb1f6750c87c026541008739695e) 
+- 포트폴리오 내용 - 팀원
+  <img width="2168" height="1027" alt="image" src="https://github.com/user-attachments/assets/054c471e-d220-4ea5-b703-2e7ae3c324ae" />
+- 포트폴리오 내용 - 명언
+  <img width="2804" height="997" alt="image" src="https://github.com/user-attachments/assets/c0ffdda9-24cf-44b7-9208-25f1026df038" />
 
 - 연습문제 : [게시판 수정하기](https://github.com/jeky05/SPRING_20240866/commit/782d6b7af6ca6922b5f0bb8effa28d24fa853f4c)
 - 연습문제 : [게시글 내용 보기](https://github.com/jeky05/SPRING_20240866/commit/494e56ef852facf9aa88cea0ab9d63d6b4cb0749)
@@ -533,13 +572,23 @@
   email 맵핑에 넣어줘야 함
   <img width="2172" height="868" alt="image" src="https://github.com/user-attachments/assets/46d9eaf9-e05c-4afc-b206-4fdd381dd60b" />
 
+- 작성자가 보는 화면 :
+  <img width="2819" height="1129" alt="image" src="https://github.com/user-attachments/assets/4730f199-732d-4308-93df-617fe23fda42" />
+
+- 작성자가 아닌 사용자가 게시글 내용 보는 화면 :
+  <img width="2856" height="1022" alt="image" src="https://github.com/user-attachments/assets/ad3d706d-2e56-4f0d-944b-68e0bdc4fb2d" />
+
 
 - 추가한 기능 : [세션만료시 로그인 페이지로 이동](https://github.com/jeky05/SPRING_20240866/commit/ab6df238c00f60955d756aa2880557b2e702875d)
+  <img width="2855" height="970" alt="image" src="https://github.com/user-attachments/assets/1bb80e8c-bbef-4bdf-a922-c53af65436a2" />
 
 ---
 
 ## 12주차: 포트폴리오 완성
 > [수업후](https://github.com/jeky05/SPRING_20240866/commit/ca12495c36c83151179927b76baec0fed510cde9)
+
+- 포트폴리오 내용 - 파일 업로드
+  <img width="2186" height="916" alt="image" src="https://github.com/user-attachments/assets/fa105514-bb9c-4686-a9df-0a0f46ed5361" />
 
 - 연습문제 : [2명이상 로그인](https://github.com/jeky05/SPRING_20240866/commit/045a162c7b4ce5e26a5523cad5304f5361cf0378)
   - 로그인 : 사용자마다 다른 세션 생성
@@ -616,8 +665,22 @@
                 }
             }
     ```
+  - 화면 :
+    <img width="2789" height="772" alt="image" src="https://github.com/user-attachments/assets/2af1c371-6807-48db-a428-7ba02247916b" />
+
+  - 에러 :
+    name : a, 제목: a, 내용: a 로 했을때는 중복 오류 정상작동
+    name: abc, 제목:a, 내용: a 로 했을때는 중복 오류 작동 안하고 내용이 동일하지 않은 것으로 처리되어 원본파일(1) 생성됨
+    => 인코딩 방식을 고정 시켜주면 해결됨
+    ```
+    try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
+        writer.write(content);
+    }
+    String existingContent = Files.readString(filePath, StandardCharsets.UTF_8);
+    ```
     
 ---
+
 
 
 
