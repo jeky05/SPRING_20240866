@@ -32,6 +32,11 @@ public class BlogController {
     @Autowired
     BlogService blogService;
 
+    @GetMapping("/about_detailed")
+    public String about() {
+        return "about_detailed";
+    }
+
     @GetMapping("/board_list") // 게시글 목록 페이지 이동
     public String board_list(
             Model model, @RequestParam(defaultValue = "0") int page,
